@@ -22,54 +22,61 @@ class PinsController extends AbstractController
     public function home(PinRepository $pinRepository): Response
     {
         $pins =  $pinRepository->findBy([], ['createdAt'=> 'DESC']);
-        return $this->render('pins/index.html.twig',compact('pins'));
+        return $this->render('pins/index.html.twig', compact('pins'));
     }
 
-     /**
-     * @Route("/pins/create", name="app_pins.create", methods={"GET", "POST"})
-     */
+    /**
+    * @Route("/pins/create", name="app_pins.create", methods={"GET", "POST"})
+    */
      
-     public function create(Request $request, EntityManagerInterface $manager):Response
-     {
-         $pin = new Pin;
+    public function create(Request $request, EntityManagerInterface $manager):Response
+    {
+        $pin = new Pin;
         $form= $this->createForm(PinType::class, $pin);
-                $form->handleRequest($request);
-                if($form->isSubmitted()&& $form->isValid()){
-                     $manager->persist($pin);
-                     $manager->flush();
-                     return $this->redirectToRoute('app.home');
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $manager->persist($pin);
+            $manager->flush();
+            return $this->redirectToRoute('app.home');
+        }
 
-                }
-
-                 return $this->render('pins/create.html.twig',[
+        return $this->render('pins/create.html.twig', [
                      'form' => $form->createView()
                  ]);
-     }
-      /**
+    }
+    /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins.edit", methods={"GET", "PUT"})
      */
-      public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response{
-          $form= $this->createForm(PinType::class, $pin,[
+    public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response
+    {
+        $form= $this->createForm(PinType::class, $pin, [
               'method'=> 'PUT'
           ]);
-          $form->handleRequest($request);
-          if ($form->isSubmitted()&& $form->isValid()) {
-              $manager->flush();
-              return $this->redirectToRoute('app.home');
-             
-          }
-          return $this->render('pins/edit.html.twig', [
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $manager->flush();
+            return $this->redirectToRoute('app.home');
+        }
+        return $this->render('pins/edit.html.twig', [
             'pin'=> $pin,
            'form' => $form->createView()
            
        ]);
-      }
-     /**
-     * @Route("/pins/{id<[0-9]+>}", name="app_pins.show", methods="GET")
+    }
+    /**
+    * @Route("/pins/{id<[0-9]+>}", name="app_pins.show", methods="GET")
+    */
+    public function show(Pin $pin): Response
+    {
+        return $this->render('pins/show.html.twig', compact('pin'));
+    }
+    /**
+     * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins.delete", methods={"DELETE"})
      */
-     public function show(Pin $pin): Response
-     {
-           return $this->render('pins/show.html.twig', compact('pin'));
-
-     }
+    public function delete(Pin $pin, EntityManagerInterface $manager)
+    {
+        $manager->remove($pin);
+        $manager->flush();
+        return $this->redirectToRoute('app.home');
+    }
 }
