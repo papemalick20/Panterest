@@ -37,6 +37,7 @@ class PinsController extends AbstractController
         if ($form->isSubmitted()&& $form->isValid()) {
             $manager->persist($pin);
             $manager->flush();
+            $this->addFlash('success', 'Pin successfully created!');
             return $this->redirectToRoute('app.home');
         }
 
@@ -55,6 +56,7 @@ class PinsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()) {
             $manager->flush();
+            $this->addFlash('success', 'Pin successfully updated!');
             return $this->redirectToRoute('app.home');
         }
         return $this->render('pins/edit.html.twig', [
@@ -71,13 +73,15 @@ class PinsController extends AbstractController
         return $this->render('pins/show.html.twig', compact('pin'));
     }
     /**
-     * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins.delete", methods={"DELETE"})
+     * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins.delete")
      */
     public function delete(Pin $pin,  Request $request, EntityManagerInterface $manager)
     {
        if ($this->isCsrfTokenValid('pin_deletion_'. $pin->getId(), $request->request->get('csrf_token'))){
         $manager->remove($pin);
         $manager->flush();
+        
+        $this->addFlash('info', 'Pin successfully deleted!');
        }
         return $this->redirectToRoute('app.home');
     }
