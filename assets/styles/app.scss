@@ -1,32 +1,42 @@
  @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-@import "~bootstrap/scss/bootstrap";
+ @import "~bootstrap/scss/bootstrap";
  body {
-   
-    font-family: 'Montserrat', sans-serif;
-}
+     font-family: 'Montserrat', sans-serif;
+ }
  
-
-          .alert {
-              padding: 10px;
-              color: white;
-              text-align: center;
-              margin: 0;
-              border : none;
-              border-radius: 0;
-              &.alert-success{
-
-              }
-              &.alert-success {
-              background-color: green;
-          }
-
-          &.alert-error {
-              background-color: red;
-          }
-
-          &.alert-info {
-              background-color: blue;
-          }
-        }
-          
+ .alert {
+     padding: 10px;
+     color: white;
+     text-align: center;
+     margin: 0;
+     border: none;
+     border-radius: 0;
+     &.alert-success {
+         background-color: green;
+     }
+     &.alert-error {
+         background-color: red;
+     }
+     &.alert-info {
+         background-color: blue;
+     }
+ }
+ 
+ .vich-image {
+     .form-check {
+         @extend .mt-3;
+     }
+     img {
+         @extend .mb-2;
+         @extend .rounded;
+         @extend .shadow;
+         @extend .img-thumbnail;
+     }
+ }
+ 
+ .pin img {
+     transition: transform 3.0s ease-out;
+     &:hover {
+         transform: scale(1.075);
+     }
+ }
