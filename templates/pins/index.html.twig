@@ -12,14 +12,14 @@
    <article class=" pin bg-white rounded shadow">
      <div class="mw-100 rounded-top overflow-hidden">
       <a href="{{path('app_pins.show', {id: pin.id})}}">
-      <img src="{{ vich_uploader_asset(pin) | imagine_filter('squared_thumbnail_medium')}}"
+      <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('build/images/calcul.jpg')) | imagine_filter('squared_thumbnail_medium')}}"
        alt="{{ pin.title }}" class="w-100 " />
      </a>
      </div>
     <h2 class="h5 pl-3 pt-3"><a href="{{path('app_pins.show', {id: pin.id})}}"
      class=" text secondary text-muted text-decoration-none"> {{pin.title}}</a></h1>
     <p></p>
-    <p class="text-muted pl-3 pb-3"><small>Submitted [THIOUNE FULL NAME]</small></p>
+    <p class="text-muted pl-3 pb-3"><small>Submitted by {{ pin.user.fullName}}</small></p>
    </article>
    </div>
    {% endfor %}

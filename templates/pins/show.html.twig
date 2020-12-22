@@ -9,7 +9,7 @@
     <article class=" pin bg-white rounded shadow">
      <div class="mw-100 rounded-top overflow-hidden">
       <a href="{{path('app_pins.show', {id: pin.id})}}">
-      <img src="{{ vich_uploader_asset(pin) | imagine_filter('squared_thumbnail_medium')}}"
+      <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('build/images/calcul.jpg')) | imagine_filter('squared_thumbnail_medium')}}"
        alt="{{ pin.title }}" class="w-100 " />
      </a>
      </div>
@@ -19,9 +19,7 @@
        <small>
          Submitted 
          <time datetime ="{{pin.createdAt|date('Y-m-d H:i:s')}}">
-         {{pin.createdAt | ago}} </time>by [Thioune Name]
-       </small>
-      </p>
+         {{pin.createdAt | ago}} </time> Submitted by {{ pin.user.fullName}}</small></p>
       <p class="pl-3 pb-3">
        {{pin.description}}
       </p>
