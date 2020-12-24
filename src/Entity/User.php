@@ -196,7 +196,7 @@ class User implements UserInterface
        return $this->getFirstName() . ''. $this->getLastName();
     }
      
-    public function getFlashBag(){
+    // public function getFlashBag(){
         
-    }
+    // }
 }

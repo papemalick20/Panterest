@@ -5,6 +5,8 @@ namespace App\Security;
 use App\Entity\User;
 //use App\Entity\Session;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterfacegetFlashBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
@@ -25,7 +27,7 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface 
 {
     use TargetPathTrait;
 
@@ -49,7 +51,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->passwordEncoder = $passwordEncoder;
         $this->flashBagInterface= $flashBagInterface;
         $this->session= $session;
-        //$this->flashBag= $flashBag;
+        
         
     }
 
@@ -106,9 +108,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
+        $session = new Session();
+        $user = new User();
+        //$session->start();
        
         
-        // $request->getSession()->getFlashBag()->add('success', 'logged in successfuly!');
+         $session->getFlashBag()->add('success', 'Welcome!'       .$token->getUser()->getFullName());
         
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
@@ -119,11 +124,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         return new RedirectResponse($this->urlGenerator->generate('app.home'));
     }
-     public function start(Request $request, AuthenticationException $authentication = null) {
-          
-        return new RedirectResponse("https://www.google.com");
-
-     }
 
     protected function getLoginUrl()
     {
