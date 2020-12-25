@@ -22,6 +22,8 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'help'=>'alal',
+                'label'=>'i consent to the privacy policy and therms of service',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
