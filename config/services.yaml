@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.mail_from_name: "Panterest 12345"
-    app.mail_from_address: "hell12345o@panterest.com"
+    app.mail_from_address: "hello@panterest.com"
 
 services:
     # default configuration for services in *this* file
