@@ -57,7 +57,8 @@ class User implements UserInterface
      * @Assert\NotBlank(message="please enter your last name")
      */
     private $lastName;
-
+     
+     
     /**
      * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="user", orphanRemoval=true)
      */
@@ -206,8 +207,12 @@ class User implements UserInterface
     }
     public function getFullName()
     {
-       return $this->getFirstName() . ''. $this->getLastName();
+       return $this->getFirstName()   .    ''   .    $this->getLastName();
     }
+     public function gravatar(?int $size= 100){
+         return 'https://www.gravatar.com/avatar/'. md5(strtolower(trim($this->getEmail()))) .'/?s='.$size;
+     }
+    
      
     // public function getFlashBag(){
         

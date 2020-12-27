@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 //use App\Entity\Session;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -113,7 +114,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         //$session->start();
        
         
-          $session->getFlashBag()->add('success', 'Welcome! '   .  $token->getUser()->getFullName(). '');
+          $session->getFlashBag()->add('success', 'Welcome! '   .  $token->getUser()->getFullName ()  .  '');
         
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
