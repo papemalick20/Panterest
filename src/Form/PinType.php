@@ -17,8 +17,8 @@ class PinType extends AbstractType
         ->add('imageFile', VichImageType::class, [
             'label' => 'Imgage(JPG or PNG file)',
             'required' => false,
-            'download_label' => '...',
-            'allow_delete' => true,
+            'download_label' => true,
+            'allow_delete' => false,
             'download_uri' => true,
             'imagine_pattern'=> 'squared_thumbnail_small'
             
