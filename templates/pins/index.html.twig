@@ -4,7 +4,7 @@
 
 {% block body %}
    {% if pins|length > 0 %}
- <h1 class="mb-5 text-center text-muted ">{{ pluralize(pins|length, 'Pin')}} </h1>
+ <h1 class="mb-5 text-center text-muted ">{{ pluralize(pins|length,   'Pin')}} </h1>
   {% for row in pins|batch(3) %}
  <div class="row mb-5">
  {% for pin in row %}
@@ -18,7 +18,6 @@
      </div>
     <h2 class="h5 pl-3 pt-3"><a href="{{path('app_pins.show', {id: pin.id})}}"
      class=" text secondary text-muted text-decoration-none"> {{pin.title}}</a></h1>
-    <p></p>
     <p class="text-muted pl-3 pb-3"><small>Submitted by {{ pin.user.fullName}}</small></p>
    </article>
    </div>

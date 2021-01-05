@@ -17,10 +17,10 @@
          Submitted 
          <time datetime ="{{pin.createdAt|date('Y-m-d H:i:s')}}">
          {{pin.createdAt | ago}} </time> Submitted by {{ pin.user.fullName}}</small></p>
-      <p class="pl-3 pr-3 pb-3 text-break">
+      <p class="pl-3 pr-3 pb-3 pt-3 text-break">
        {{pin.description}}
       </p>
-      <div class='pl-3 pb-3'>
+      <div class='pl-3 pb-3 pt-3'>
       <a href="{{path('app_pins.edit', {id: pin.id})}}" class="btn btn-light">Edit</a>
    <a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && 
      document.getElementById('js-pin-delete-form').submit();" class="btn btn-light">Delete</a>
