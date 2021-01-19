@@ -21,9 +21,17 @@
        {{pin.description}}
       </p>
       <div class='pl-3 pb-3 pt-3'>
-      <a href="{{path('app_pins.edit', {id: pin.id})}}" class="btn btn-light">Edit</a>
+      <a href="{{path('app_pins.edit', {id: pin.id})}}" class="btn btn-light">
+       {% if is_granted('POST_EDIT',pin) %}
+       
+       {% endif %}
+      Edit</a>
    <a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && 
-     document.getElementById('js-pin-delete-form').submit();" class="btn btn-light">Delete</a>
+     document.getElementById('js-pin-delete-form').submit();" class="btn btn-light">
+      {% if is_granted('POST_EDIT',pin) %}
+       
+       {% endif %}
+     Delete</a>
    {# <a href="{{path('app.home')}}">Go Back</a> #}
     <form id ="js-pin-delete-form" action ="{{path('app_pins.delete', {id: pin.id})}}" method ="post"
      style= "display:none;">

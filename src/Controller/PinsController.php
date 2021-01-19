@@ -52,6 +52,8 @@ class PinsController extends AbstractController
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response
     {
+        //$this->denyAccessUnlessGranted('POST_EDIT', $pin);
+        
         $form= $this->createForm(PinType::class, $pin, [
               'method'=> 'PUT'
           ]);
@@ -79,6 +81,7 @@ class PinsController extends AbstractController
      */
     public function delete(Pin $pin,  Request $request, EntityManagerInterface $manager)
     {
+        $this->denyAccessUnlessGranted('POST_DELETE', $pin);
        if ($this->isCsrfTokenValid('pin_deletion_'. $pin->getId(), $request->request->get('csrf_token'))){
         $manager->remove($pin);
         $manager->flush();

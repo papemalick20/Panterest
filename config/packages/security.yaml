@@ -18,6 +18,8 @@ security:
             anonymous: true
             lazy: true
             provider: app_user_provider
+            # form_login:
+            #     login_path: app_login
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
@@ -39,3 +41,5 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/app_pins.edit, roles: ROLE_USER }
+        # - { path: ^/app_pins.delete, roles: ROLE_USER }
