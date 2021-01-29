@@ -16,24 +16,24 @@ class PinVoter extends Voter
             && $subject instanceof \App\Entity\Pin;
     }
 
-    protected function voteOnAttribute($attribute, $pin, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
             return false;
         }
-         if (null == $pin->getUser()){
+         if ($user !== $subject->getUser()){
              return false;
          }
 
         // ... (check conditions and return true to grant permission) ...
-        switch ($pin) {
+        switch ($subject) {
             case 'POST_EDIT':
-                return $pin->getUser()->getId() == $token->getUser->getId();
+                return $subject->getUser()->getId() == $token->getUser->getId();
                 break;
             case 'POST_DELETE':
-                return $pin->getUser()->getId()== $token->getUser->getId();
+                return $subject->getUser()->getId()== $token->getUser->getId();
                 break;
         }
 

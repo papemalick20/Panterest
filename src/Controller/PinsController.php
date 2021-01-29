@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PinsController extends AbstractController
 {
@@ -49,6 +50,7 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins.edit", methods={"GET", "PUT"})
+     *  
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response
     {
@@ -68,6 +70,7 @@ class PinsController extends AbstractController
            'form' => $form->createView()
            
        ]);
+      
     }
     /**
     * @Route("/pins/{id<[0-9]+>}", name="app_pins.show", methods="GET")
@@ -78,10 +81,11 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins.delete", methods="DELETE")
+     
      */
     public function delete(Pin $pin,  Request $request, EntityManagerInterface $manager)
     {
-        $this->denyAccessUnlessGranted('POST_DELETE', $pin);
+        //$this->denyAccessUnlessGranted('POST_DELETE', $pin);
        if ($this->isCsrfTokenValid('pin_deletion_'. $pin->getId(), $request->request->get('csrf_token'))){
         $manager->remove($pin);
         $manager->flush();
