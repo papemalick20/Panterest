@@ -14,8 +14,8 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
-            $this->addFlash('error', 'Already logged in!');
+        if( $this->getUser()){
+            $this->addFlash('error', 'you need to log in first');
             return $this->redirectToRoute('app.home');
         }
 

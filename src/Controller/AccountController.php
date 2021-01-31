@@ -9,12 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
     /**
      * @Route("/account", name="app_account", methods="GET")
+     * isGranted("IS_AUTHENTICATED_FULLY")
      */
     public function show(): Response
     {
@@ -27,6 +29,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account/edit", name="app_account_edit", methods={"GET", "POST"})
+     * @isGranted("IS_AUTHENTICATED_FULLY")
      */
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
@@ -50,6 +53,7 @@ class AccountController extends AbstractController
 
      /**
      * @Route("/account/change-password", name="app_account_change_password", methods={"GET", "POST"})
+     * @isGranted("IS_AUTHENTICATED_FULLY")
      */
     public function changePassword(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $password): Response
     {
