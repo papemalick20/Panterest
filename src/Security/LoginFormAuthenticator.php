@@ -111,10 +111,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         $session = new Session();
         $user = new User();
+        
         //$session->start();
        
         
-          $session->getFlashBag()->add('success', 'Welcome! '   .  $token->getUser()->getFullName ()  .  '');
+          $session->getFlashBag()->add('success', 'Welcome! '   .  $token->getUser()->getFullName()  .  '');
         
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {

@@ -205,11 +205,11 @@ class User implements UserInterface
 
         return $this;
     }
-    public function getFullName()
+    public function getFullName(): string
     {
        return $this->getFirstName() .  ' '   . $this->getLastName();
     }
-     public function gravatar(?int $size= 100){
+     public function getGravatarUrl(?int $size= 100){
          return sprintf( 'https://www.gravatar.com/avatar/'. md5(strtolower(trim($this->getEmail()))) .'/?s='.$size);
      }
     

@@ -14,8 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class PinsController extends AbstractController
 {
     /**
@@ -29,10 +29,24 @@ class PinsController extends AbstractController
 
     /**
     * @Route("/pins/create", name="app_pins.create", methods={"GET", "POST"})
+    * @Security("is_granted('ROLE_USER') and user.isVerified()")
     */
      
     public function create(Request $request, EntityManagerInterface $manager, UserRepository $repo):Response
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'you need to log in first');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        if(! $this->getUser()->isVerified()){
+            $this->addFlash('error', 'you need to have a verified account');
+
+            return $this->redirectToRoute('app.home');
+        }
+
+        
         $pin = new Pin;
         $form= $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);
@@ -50,10 +64,26 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins.edit", methods={"GET", "PUT"})
-     *  
+     *@isGranted("PIN_MANAGE", subject ="pin")
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'you need to log in first');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        if(! $this->getUser()->isVerified()){
+            $this->addFlash('error', 'you need to have a verified account');
+
+            return $this->redirectToRoute('app.home');
+        }
+        if($pin->getUser()!= $this->getUser()){
+            $this->addFlash('error', 'access forbedden');
+
+            return $this->redirectToRoute('app.home');
+        }
         //$this->denyAccessUnlessGranted('POST_EDIT', $pin);
         
         $form= $this->createForm(PinType::class, $pin, [
@@ -81,10 +111,27 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins.delete", methods="DELETE")
+     * @isGranted("PIN_MANAGE", subject ="pin")
      
      */
     public function delete(Pin $pin,  Request $request, EntityManagerInterface $manager)
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'you need to log in first');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        if(! $this->getUser()->isVerified()){
+            $this->addFlash('error', 'you need to have a verified account');
+
+            return $this->redirectToRoute('app.home');
+        }
+        if($pin->getUser()!= $this->getUser()){
+            $this->addFlash('error', 'access for bedden');
+
+            return $this->redirectToRoute('app.home');
+        }
         //$this->denyAccessUnlessGranted('POST_DELETE', $pin);
        if ($this->isCsrfTokenValid('pin_deletion_'. $pin->getId(), $request->request->get('csrf_token'))){
         $manager->remove($pin);

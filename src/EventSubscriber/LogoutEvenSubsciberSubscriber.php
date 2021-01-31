@@ -21,7 +21,10 @@ class LogoutEvenSubsciberSubscriber implements EventSubscriberInterface
 
         //message flash
         $session = new Session();
-        $session->getFlashBag()->add('success', 'logged out successfully');
+        $session->getFlashBag()->add(
+        'success', 
+        'logged out successfully! '
+    );
          $event->setResponse(new RedirectResponse($this->urlGenerator->generate('app.home')));
       
     }
