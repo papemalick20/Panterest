@@ -6,9 +6,9 @@
   <div class="row">
     <div class="col-md-6 mx-auto text-center">
      <h1 class="my-4"> Profile</h1>
-      <img src="{{app.user.GravatarUrl(200)}}" alt="{{app.user.fullName}}'s Avatar" class="shadow rounded-circle">
+      <img src="{{app.user.GravatarUrl(200)}}" class="shadow rounded-circle">
       
-      <p class="mt-5 lead">{{app.user.email}}</p>
+      <p class="mt-3 lead">{{app.user.email}}</p>
       
      <p> <small>Account createdt on {{app.user.createdAt|date('d/m/y')}}</small></p>
 

@@ -34,18 +34,6 @@ class PinsController extends AbstractController
      
     public function create(Request $request, EntityManagerInterface $manager, UserRepository $repo):Response
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'you need to log in first');
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        if(! $this->getUser()->isVerified()){
-            $this->addFlash('error', 'you need to have a verified account');
-
-            return $this->redirectToRoute('app.home');
-        }
-
         
         $pin = new Pin;
         $form= $this->createForm(PinType::class, $pin);
@@ -68,23 +56,7 @@ class PinsController extends AbstractController
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $manager): Response
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'you need to log in first');
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        if(! $this->getUser()->isVerified()){
-            $this->addFlash('error', 'you need to have a verified account');
-
-            return $this->redirectToRoute('app.home');
-        }
-        if($pin->getUser()!= $this->getUser()){
-            $this->addFlash('error', 'access forbedden');
-
-            return $this->redirectToRoute('app.home');
-        }
-        //$this->denyAccessUnlessGranted('POST_EDIT', $pin);
+        
         
         $form= $this->createForm(PinType::class, $pin, [
               'method'=> 'PUT'
@@ -116,23 +88,7 @@ class PinsController extends AbstractController
      */
     public function delete(Pin $pin,  Request $request, EntityManagerInterface $manager)
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'you need to log in first');
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        if(! $this->getUser()->isVerified()){
-            $this->addFlash('error', 'you need to have a verified account');
-
-            return $this->redirectToRoute('app.home');
-        }
-        if($pin->getUser()!= $this->getUser()){
-            $this->addFlash('error', 'access for bedden');
-
-            return $this->redirectToRoute('app.home');
-        }
-        //$this->denyAccessUnlessGranted('POST_DELETE', $pin);
+    
        if ($this->isCsrfTokenValid('pin_deletion_'. $pin->getId(), $request->request->get('csrf_token'))){
         $manager->remove($pin);
         $manager->flush();

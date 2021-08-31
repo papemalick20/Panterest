@@ -131,4 +131,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
+
+    /**
+     * override to control what happens when the user  hits a secure page
+     * but isn't logged yet
+     * 
+     * @return RedirectResponse
+     */
+    public function start(Request $request, AuthenticationException $authenticationException = null ){
+        $session = new Session();
+        $session->getFlashBag()->add('error', 'you need to log in first');
+        $url = $this->getLoginUrl();
+        return new RedirectResponse($url);
+
+    }
 }
